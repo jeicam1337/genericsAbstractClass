@@ -1,6 +1,6 @@
 package com.company;
 
-public class FootballTeam<T> extends Team {
+public class FootballTeam extends Team {
     public FootballTeam(String name) {
         super(name);
     }

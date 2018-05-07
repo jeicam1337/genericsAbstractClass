@@ -1,27 +1,30 @@
 package com.company;
 
+import com.sun.istack.internal.NotNull;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 public class League<T extends Team> {
 
-    private final static int pointsForWin = 3;
-    private final static int pointsForDraw = 1;
+    private final static int POINTS_FOR_WIN = 3;
+    private final static int POINTS_FOR_DRAW = 1;
     private String name;
     private List<T> teamList;
-    private TableComparator comp = new TableComparator();
+    private static TableComparator TABLE_COMPARATOR = new TableComparator();
 
-    public League(String name) {
+    public League(@NotNull String name) {
         this.name = name;
         this.teamList = new ArrayList<>();
     }
 
     void addTeam(T team) {
+        Objects.requireNonNull(team, "a team cannot be null");
         teamList.add(team);
-        Collections.sort(teamList, comp);
+        Collections.sort(teamList, TABLE_COMPARATOR);
     }
-
 
     void printTable() {
         System.out.println(name);
@@ -30,7 +33,7 @@ public class League<T extends Team> {
         }
     }
 
-    void addMatch(T homeTeam, T awayTeam, int homeGoals, int awayGoals) {
+    void addMatch(@NotNull T homeTeam, @NotNull T awayTeam, int homeGoals, int awayGoals) {
 
         Match<T> match = new Match<>(homeTeam, awayTeam, homeGoals, awayGoals);
 
@@ -38,14 +41,14 @@ public class League<T extends Team> {
         awayTeam.incrementMatches();
 
         if (homeTeam.equals(match.getWinner())) {
-            homeTeam.pointsToAdd(pointsForWin);
+            homeTeam.addPoints(POINTS_FOR_WIN);
         } else if (awayTeam.equals(match.getWinner())) {
-            awayTeam.pointsToAdd(pointsForWin);
+            awayTeam.addPoints(POINTS_FOR_WIN);
         } else {
-            homeTeam.pointsToAdd(pointsForDraw);
-            awayTeam.pointsToAdd(pointsForDraw);
+            homeTeam.addPoints(POINTS_FOR_DRAW);
+            awayTeam.addPoints(POINTS_FOR_DRAW);
         }
-        Collections.sort(teamList, comp);
+        Collections.sort(teamList, TABLE_COMPARATOR);
     }
 
     class Match<T extends Team> {
@@ -55,7 +58,8 @@ public class League<T extends Team> {
         private int homeGoals;
         private int awayGoals;
 
-        public Match(T homeTeam, T awayTeam, int homeGoals, int awayGoals) {
+        public Match(@NotNull T homeTeam, @NotNull T awayTeam, int homeGoals, int awayGoals) {
+
             this.homeTeam = homeTeam;
             this.awayTeam = awayTeam;
             this.homeGoals = homeGoals;
@@ -71,17 +75,6 @@ public class League<T extends Team> {
                 return null;
             }
         }
-
-        public int getHomeGoals() {
-            return homeGoals;
-        }
-
-        public int getAwayGoals() {
-            return awayGoals;
-        }
-
-
     }
-
 }
 

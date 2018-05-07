@@ -1,5 +1,7 @@
 package com.company;
 
+import com.sun.istack.internal.NotNull;
+
 import java.util.Objects;
 
 public abstract class Team {
@@ -13,12 +15,13 @@ public abstract class Team {
         this.points = 0;
     }
 
+    @NotNull
     void incrementMatches() {
         this.matches++;
     }
 
-    void pointsToAdd(int howManyPoints) {
-        this.points += howManyPoints;
+    void addPoints(int pointsToAdd) {
+        this.points += pointsToAdd;
     }
 
     public int getPoints() {
