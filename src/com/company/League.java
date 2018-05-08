@@ -13,14 +13,14 @@ public class League<T extends Team> {
     private final static int POINTS_FOR_DRAW = 1;
     private String name;
     private List<T> teamList;
-    private static TableComparator TABLE_COMPARATOR = new TableComparator();
+    private final static TableComparator TABLE_COMPARATOR = new TableComparator();
 
     public League(@NotNull String name) {
         this.name = name;
         this.teamList = new ArrayList<>();
     }
 
-    void addTeam(T team) {
+    void addTeam(@NotNull T team) {
         Objects.requireNonNull(team, "a team cannot be null");
         teamList.add(team);
         Collections.sort(teamList, TABLE_COMPARATOR);

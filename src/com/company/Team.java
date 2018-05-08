@@ -15,7 +15,6 @@ public abstract class Team {
         this.points = 0;
     }
 
-    @NotNull
     void incrementMatches() {
         this.matches++;
     }
